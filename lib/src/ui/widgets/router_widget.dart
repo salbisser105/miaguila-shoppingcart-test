@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_miaguila/bloc_navigator.dart';
+import '../../../bloc_navigator.dart';
 
 class RouterWidget extends StatefulWidget {
   const RouterWidget({Key? key}) : super(key: key);

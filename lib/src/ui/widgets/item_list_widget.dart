@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_miaguila/bloc_navigator.dart';
-import 'package:test_app_miaguila/src/ui/pages/description_page.dart';
-import 'package:test_app_miaguila/src/ui/widgets/add_to_car_widget.dart';
-import 'package:test_app_miaguila/src/ui/widgets/custom_button_widget.dart';
 
-class ItemsListWidget extends StatelessWidget {
+import '../../../bloc_navigator.dart';
+import '../../../src/ui/pages/description_page.dart';
+import '../../../src/ui/widgets/custom_button_widget.dart';
+
+class ItemsListWidget extends StatefulWidget {
   const ItemsListWidget({
     Key? key,
     required List items,
@@ -14,20 +14,28 @@ class ItemsListWidget extends StatelessWidget {
   final List _items;
 
   @override
+  State<ItemsListWidget> createState() => _ItemsListWidgetState();
+}
+
+class _ItemsListWidgetState extends State<ItemsListWidget> {
+  List shoppingCart = [];
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: _items.length,
+        itemCount: widget._items.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               blocNavigator.routeTo(
                   namePage: 'description',
                   page: DescriptionPage(
-                    title: _items[index]["title"],
-                    description: _items[index]["description"],
-                    urlImage: _items[index]["image"],
-                    price: _items[index]["price"],
+                    title: widget._items[index]["title"],
+                    description: widget._items[index]["description"],
+                    urlImage: widget._items[index]["image"],
+                    price: widget._items[index]["price"],
+                    shoppingCart: shoppingCart,
                   ));
             },
             child: Container(
@@ -42,16 +50,26 @@ class ItemsListWidget extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3,
                         child: Text(
-                          _items[index]["title"],
+                          widget._items[index]["title"],
                           maxLines: 2,
                           textAlign: TextAlign.center,
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      Text('Precio: ${_items[index]["price"]} USD'),
+                      Text('Precio: ${widget._items[index]["price"]} USD'),
                       const SizedBox(height: 15),
-                      const CustomButtonWidget(
-                          text: 'Agregar al carrito', height: 50, width: 100)
+                      GestureDetector(
+                        onTap: () {
+                          shoppingCart.add(widget._items[index]);
+                          blocNavigator.shoppingCart = shoppingCart;
+                          setState(() {});
+                        },
+                        child: const CustomButtonWidget(
+                          text: 'Agregar al carrito',
+                          height: 50,
+                          width: 100,
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(
@@ -59,7 +77,7 @@ class ItemsListWidget extends StatelessWidget {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          _items[index]["image"],
+                          widget._items[index]["image"],
                           fit: BoxFit.contain,
                         )),
                   )

@@ -1,3 +1,4 @@
+//Product Model not used, but can be used for reading Jsons from web.
 class ProductModel {
   final String title;
   final String image;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_miaguila/bloc_central.dart';
 
+import '../../bloc_central.dart';
 import 'src/ui/widgets/router_widget.dart';
 
 void main() {

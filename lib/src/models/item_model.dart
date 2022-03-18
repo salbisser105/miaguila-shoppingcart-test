@@ -1,3 +1,4 @@
+//Main itemModel .
 class ItemModel {
   final String title;
   final double price;
@@ -5,4 +6,7 @@ class ItemModel {
   final String imageUrl;
 
   ItemModel(this.title, this.price, this.description, this.imageUrl);
+
+  
+
 }

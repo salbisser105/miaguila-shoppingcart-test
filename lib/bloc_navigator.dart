@@ -1,29 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_miaguila/src/ui/pages/home_page.dart';
-import 'package:test_app_miaguila/src/ui/pages/item_list_page.dart';
-import 'package:test_app_miaguila/src/ui/pages/shopping_cart_page.dart';
 
+import '../../src/helpers/list_helper_test.dart';
+import '../../src/models/item_model.dart';
+import '../../src/ui/pages/item_list_page.dart';
+import '../../src/ui/pages/shopping_cart_page.dart';
 import 'src/entities/entity_bloc.dart';
-import 'src/models/ModelBarItem.dart';
+import 'src/models/bar_item_model.dart';
 import 'src/ui/widgets/bottom_navigation_bar_widget.dart';
 
 class _BlocNavigator extends Bloc<int> {
   final String _key = "widgets";
   final String _defaultNamePage = "routerWidget";
   final Widget _defaultPage = const ItemListPage();
+  final List<ItemModel> mapItemsList = [];
   final Map<String, Widget> _navigatorMap = {};
   List<String> _history = [];
   final Map<String, ModelBarItem> _mapModelBarItem = {};
   bool showNavigationBar = true;
   String _currentBottomItemsIndexLabel = '';
 
+  List shoppingCart = [];
+  final List<ItemModel> items = ItemsListHelper().items;
+
   _BlocNavigator() {
     setValue(_key, 0);
     routeTo(namePage: _defaultNamePage, page: _defaultPage);
   }
 
+//This method is working but need to change the structure of the data
+//due to the time i will leave it out.
+  double get priceTotal =>
+      items.fold(0, (total, current) => total + current.price);
+  String get priceTotalString => priceTotal.toStringAsFixed(3);
+
   /// [streamPage] Gets the current page as stream.
   Stream<int> get streamPage => getStream(_key) as Stream<int>;
+
+  int? get itemLists => getValue(_key);
 
   /// [sizeOfHistory] Gets the size represented as an integer.
   int get sizeOfHistory => getValue(_key) ?? 0;
@@ -146,7 +159,9 @@ class _BlocNavigator extends Bloc<int> {
     addBottomBarItem(ModelBarItem(
         namePage: 'WalletTransactionHistoryPage',
         label: 'Cart',
-        page: const ShoppingCartPage(),
+        page: const ShoppingCartPage(
+          cartItems: [],
+        ),
         icon: Icons.shopping_cart));
   }
 }
