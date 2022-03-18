@@ -137,7 +137,7 @@ class _BodyWidgetState extends State<BodyWidget> {
                           // blocNavigator.shoppingCart = widget.shoppingCart;
                         },
                         child: const CustomButtonWidget(
-                            text: 'Agregar al carrito', height: 50, width: 100),
+                            text: 'Add to cart', height: 50, width: 100),
                       ),
                     ]),
                 const SizedBox(height: 65.0),
