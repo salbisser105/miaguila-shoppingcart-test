@@ -26,7 +26,7 @@ In the aplication we have different features that are being used.
 * For the routing of the aplication we use BLoC Navigator.
 * Different own widgets for handling bottom bar navigation, alert dialog. 
 
-## Up-coaming features:
+## Upcoaming features:
 * Local database.(Dio)
 * Implementation of Cart BLoC.
 
